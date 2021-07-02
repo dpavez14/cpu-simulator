@@ -1,0 +1,39 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto auto 1fr;
+  grid-gap: 5px;
+  grid-template-areas:
+    "configuracion configuracion configuracion configuracion configuracion"
+    "cpu memoria-logica ram disco cola-procesos"
+    "procesos-memoria  memoria-logica ram disco cola-procesos";
+  height: 100vh;
+}
+
+.cola {
+  grid-area: cola-procesos;
+}
+
+.configuracion {
+  grid-area: configuracion;
+}
+
+.cpu {
+  grid-area: cpu;
+}
+
+.disco {
+  grid-area: disco;
+}
+
+.memoria-logica {
+  grid-area: memoria-logica;
+}
+
+.procesos-memoria {
+  grid-area: procesos-memoria;
+}
+
+.ram {
+  grid-area: ram;
+}

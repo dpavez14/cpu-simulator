@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcesadorComponent } from './procesador.component';
+import { ColaProcesosComponent } from './cola-procesos.component';
 
-describe('ProcesadorComponent', () => {
-  let component: ProcesadorComponent;
-  let fixture: ComponentFixture<ProcesadorComponent>;
+describe('ColaProcesosComponent', () => {
+  let component: ColaProcesosComponent;
+  let fixture: ComponentFixture<ColaProcesosComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProcesadorComponent ]
+      declarations: [ ColaProcesosComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProcesadorComponent);
+    fixture = TestBed.createComponent(ColaProcesosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

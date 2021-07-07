@@ -1,7 +1,46 @@
-<mat-form-field appearance="outline">
-    <mat-label>Nº Procesos</mat-label>
-    <input matInput>
-</mat-form-field>
-<button mat-flat-button color="primary">Inicio</button>
-<button mat-flat-button color="accent">Pausa</button>
-<button mat-flat-button color="warn">Reiniciar</button>
+<div class="container">
+    <mat-form-field appearance="outline">
+        <mat-label>Cuanto de tiempo CPU</mat-label>
+        <input matInput type="number" min="1" class="right-align" placeholder="1" [disabled]="iniciado" [(ngModel)]="cuanto">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Tiempo de ciclo</mat-label>
+        <input matInput type="number" min="1" class="right-align" placeholder="1" [disabled]="iniciado"  [(ngModel)]="tiempoCiclo">
+        <span matSuffix>seg</span>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Tamaño memoria principal</mat-label>
+        <input matInput type="number" min="8" class="right-align" placeholder="4" [disabled]="iniciado"  [(ngModel)]="tamanoMemoria">
+        <span matSuffix>kB</span>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Tamaño páginas</mat-label>
+        <input matInput type="number" min="1" class="right-align" placeholder="1" [disabled]="iniciado"  [(ngModel)]="tamanoPaginas">
+        <span matSuffix>kB</span>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Prioridad</mat-label>
+        <mat-select [(value)]="prioridad">
+            <mat-option value="0">Sin prioridad</mat-option>
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+            <mat-option value="3">3</mat-option>
+            <mat-option value="4">4</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Cantidad de procesos</mat-label>
+        <input matInput type="number" min="1" class="right-align" placeholder="1" [(ngModel)]="nProcesos">
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" (click)="agregarProceso()"><mat-icon>add</mat-icon> Agregar proceso(s)</button>
+
+    <button *ngIf="!pausado" mat-flat-button color="warn" (click)="pausar()" [disabled]="!iniciado"><mat-icon>pause</mat-icon> Pausar</button>
+    <button *ngIf="pausado" mat-flat-button color="primary" (click)="continuar()" [disabled]="!iniciado"><mat-icon>play_arrow</mat-icon> Continuar</button>
+</div>
+

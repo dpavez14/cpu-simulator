@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: center;
+  column-gap: 16px;
+  align-items: baseline;
+  height: 60px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.right-align {
+  text-align: right;
+}
+
+

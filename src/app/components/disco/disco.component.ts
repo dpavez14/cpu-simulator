@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {Pagina} from "../../models/pagina";
+import {DataService} from "../../services/data.service";
+import {Memoria} from "../../models/memoria";
+import {Color} from "../../models/color";
 
 @Component({
   selector: 'app-disco',
@@ -7,9 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DiscoComponent implements OnInit {
 
-  constructor() { }
+  memoria: Memoria | undefined = undefined;
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.dataService.memoriaVirtual$.subscribe(val => this.memoria = val);
   }
 
+  getFontColor(background: Color): string {
+    return this.dataService.getFontColor(background);
+  }
 }

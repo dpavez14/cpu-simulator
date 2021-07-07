@@ -1,9 +1,23 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>CPU</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>Proceso: {{PID}}</p>
-        <p>Tamaño: {{tamano}}kb</p>
-    </mat-card-content>
-</mat-card>
+<ng-container *ngIf="procesoActual != undefined">
+    <div class="card" style="background-color: rgb({{procesoActual.color.r}},{{procesoActual.color.g}},{{procesoActual.color.b}}); color: {{getFontColor(procesoActual.color)}};">
+        <h2>CPU</h2>
+        <p>Proceso: {{procesoActual.PID}}</p>
+        <p>Prioridad: {{procesoActual.prioridad == 0 ? "Sin prioridad" : procesoActual.prioridad}}</p>
+        <p>Tamaño proceso: {{procesoActual.tamano}} kB</p>
+        <p>Trabajo proceso restante: {{procesoActual.ciclosRestantes}} ciclos</p>
+        <p>Cuanto CPU restante: {{cuantoRestante}} ciclos</p>
+        <p>Ciclos CPU: {{ciclos}}</p>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="procesoActual == undefined">
+    <div class="card">
+        <h2>CPU</h2>
+        <p>Proceso: ---</p>
+        <p>Prioridad: ---</p>
+        <p>Tamaño proceso: --- kB</p>
+        <p>Trabajo proceso restante: --- ciclos</p>
+        <p>Cuanto CPU restante: {{cuantoRestante}} ciclos</p>
+        <p>Ciclos CPU: {{ciclos}}</p>
+    </div>
+</ng-container>

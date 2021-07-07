@@ -1,7 +1,9 @@
 export class Pagina {
-    direccion: number;
+    direccionFisica: number;
+    espacioUtilizado: number;
 
-    constructor(direccion: number) {
-        this.direccion = direccion;
+    constructor() {
+        this.direccionFisica = -1;
+        this.espacioUtilizado = 0;
     }
 }

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {DataService} from "../../services/data.service";
+import {Pagina} from "../../models/pagina";
+import {Memoria} from "../../models/memoria";
+import {Color} from "../../models/color";
 
 @Component({
   selector: 'app-ram',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RamComponent implements OnInit {
 
-  constructor() { }
+  memoria: Memoria | undefined = undefined;
+
+  public paginas: Pagina[] = [
+  ];
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.dataService.memoriaPrincipal$.subscribe(val => this.memoria = val);
   }
 
+  getFontColor(background: Color): string {
+    return this.dataService.getFontColor(background);
+  }
 }

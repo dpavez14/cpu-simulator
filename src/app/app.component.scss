@@ -1,21 +1,29 @@
+.col1 {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "cpu"
+    "cola-procesos";
+  grid-area: col1;
+}
+
 .container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: auto auto 1fr;
-  grid-gap: 5px;
+  grid-template-columns: 0.5fr 0.5fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 10px;
   grid-template-areas:
-    "configuracion configuracion configuracion configuracion configuracion"
-    "cpu memoria-logica ram disco cola-procesos"
-    "procesos-memoria  memoria-logica ram disco cola-procesos";
-  height: 100vh;
+    "col1 memoria-logica ram disco"
+    "col1 memoria-logica ram disco";
+  height: calc(100vh - 120px);
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .cola {
   grid-area: cola-procesos;
-}
-
-.configuracion {
-  grid-area: configuracion;
 }
 
 .cpu {
@@ -30,8 +38,8 @@
   grid-area: memoria-logica;
 }
 
-.procesos-memoria {
-  grid-area: procesos-memoria;
+.tabla-traduccion {
+  grid-area: tabla-traduccion;
 }
 
 .ram {

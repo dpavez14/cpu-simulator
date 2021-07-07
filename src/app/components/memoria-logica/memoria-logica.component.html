@@ -1,11 +1,18 @@
-<h1 >Memoria lógica</h1>
-<div class="container">
-    <ng-container *ngFor="let pagina of paginas; let i = index">
-        <mat-card>
-            <p>{{i}}: {{pagina.direccion}}</p>
-        </mat-card>
-    </ng-container>
-</div>
+<ng-container *ngIf="procesoActual != null">
+    <h2>Direcciones lógicas proceso {{procesoActual.PID}}</h2>
+    <div class="container">
+        <ng-container *ngFor="let pagina of procesoActual.paginas; let i = index">
+            <div class="card" style="background-color: rgb({{procesoActual.color.r}},{{procesoActual.color.g}},{{procesoActual.color.b}}); color: {{getFontColor(procesoActual.color)}};">
+                <p>{{i}}: {{pagina.direccionFisica}}</p>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="procesoActual == null">
+    <h2>Direcciones lógicas proceso ---</h2>
+    <div class="container"></div>
+</ng-container>
 
 
 

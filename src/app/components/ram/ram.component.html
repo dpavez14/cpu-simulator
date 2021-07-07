@@ -1,1 +1,18 @@
-<p>ram works!</p>
+<h2>Memoria principal</h2>
+<div *ngIf="memoria != null"  class="container">
+    <ng-container *ngFor="let frame of memoria.framesUsados; let i = index">
+        <div *ngIf="frame != null" class="card" style="background-color: rgb({{frame.color.r}},{{frame.color.g}},{{frame.color.b}}); color: {{getFontColor(frame.color)}};">
+            <p>Frame: {{i}}</p>
+            <p>PID: {{frame.PID}}</p>
+            <p>Página: {{frame.nPagina}}</p>
+            <p>Memoria utilizada: {{frame.memoriaUtilizada}} kB</p>
+        </div>
+        <div *ngIf="frame == null" class="card">
+            <p>Frame: {{i}}</p>
+            <p>PID: ---</p>
+            <p>Página: ---</p>
+            <p>Memoria utilizada: --- kB</p>
+        </div>
+
+    </ng-container>
+</div>

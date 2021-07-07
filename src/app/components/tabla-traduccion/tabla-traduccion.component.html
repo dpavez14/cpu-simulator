@@ -1,0 +1,8 @@
+<h2>Tabla traducción</h2>
+<div class="container">
+    <ng-container *ngFor="let pagina of paginas; let i = index">
+        <mat-card>
+            <p>{{i}}: {{decimalToHex(pagina.direccionFisica)}}</p>
+        </mat-card>
+    </ng-container>
+</div>

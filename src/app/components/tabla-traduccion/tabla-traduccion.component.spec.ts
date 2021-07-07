@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcesosMemoriaComponent } from './procesos-memoria.component';
+import { TablaTraduccionComponent } from './tabla-traduccion.component';
 
 describe('ProcesosMemoriaComponent', () => {
-  let component: ProcesosMemoriaComponent;
-  let fixture: ComponentFixture<ProcesosMemoriaComponent>;
+  let component: TablaTraduccionComponent;
+  let fixture: ComponentFixture<TablaTraduccionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProcesosMemoriaComponent ]
+      declarations: [ TablaTraduccionComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProcesosMemoriaComponent);
+    fixture = TestBed.createComponent(TablaTraduccionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

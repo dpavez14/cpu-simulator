@@ -7,7 +7,7 @@ import { DiscoComponent } from './components/disco/disco.component';
 import { RamComponent } from './components/ram/ram.component';
 import { MemoriaLogicaComponent } from './components/memoria-logica/memoria-logica.component';
 import { ColaProcesosComponent } from './components/cola-procesos/cola-procesos.component';
-import { ProcesosMemoriaComponent } from './components/procesos-memoria/procesos-memoria.component';
+import { TablaTraduccionComponent } from './components/tabla-traduccion/tabla-traduccion.component';
 import { CpuComponent } from './components/cpu/cpu.component';
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -22,6 +22,8 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatIconModule } from "@angular/material/icon";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatRadioModule } from "@angular/material/radio";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -31,7 +33,7 @@ import { MatRadioModule } from "@angular/material/radio";
     RamComponent,
     MemoriaLogicaComponent,
     ColaProcesosComponent,
-    ProcesosMemoriaComponent,
+    TablaTraduccionComponent,
     CpuComponent,
     ConfiguracionComponent
   ],
@@ -49,7 +51,9 @@ import { MatRadioModule } from "@angular/material/radio";
     MatSelectModule,
     MatRadioModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
+    FlexLayoutModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

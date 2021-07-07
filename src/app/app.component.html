@@ -1,10 +1,13 @@
+<app-configuracion></app-configuracion>
+
 <div class="container">
-    <app-configuracion class="configuracion"></app-configuracion>
-    <app-cpu class="cpu"></app-cpu>
-    <app-procesos-memoria class="procesos-memoria"></app-procesos-memoria>
+    <div class="col1">
+        <app-cpu class="cpu"></app-cpu>
+        <app-cola-procesos class="cola"></app-cola-procesos>
+    </div>
     <app-memoria-logica class="memoria-logica"></app-memoria-logica>
+    <!--app-tabla-traduccion class="tabla-traduccion"></app-tabla-traduccion-->
     <app-ram class="ram"></app-ram>
     <app-disco class="disco"></app-disco>
-    <app-cola-procesos class="cola"></app-cola-procesos>
 </div>
 

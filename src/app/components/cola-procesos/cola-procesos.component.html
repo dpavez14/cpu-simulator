@@ -1,1 +1,44 @@
-<p>cola-procesos works!</p>
+<h2>Cola de procesos</h2>
+<div class="container">
+    <ng-container *ngFor="let proceso of procesosPrioridad4; let i = index">
+        <div class="card" style="background-color: rgb({{proceso.color.r}},{{proceso.color.g}},{{proceso.color.b}}); color: {{getFontColor(proceso.color)}}">
+            <p>PID: {{proceso.PID}}</p>
+            <p>Prioridad: 4</p>
+            <p>Tamaño: {{proceso.tamano}} kB</p>
+            <p>Ciclos restantes: {{proceso.ciclosRestantes}}</p>
+        </div>
+    </ng-container>
+    <ng-container *ngFor="let proceso of procesosPrioridad3; let i = index">
+        <div class="card" style="background-color: rgb({{proceso.color.r}},{{proceso.color.g}},{{proceso.color.b}}); color: {{getFontColor(proceso.color)}};">
+            <p>PID: {{proceso.PID}}</p>
+            <p>Prioridad: 3</p>
+            <p>Tamaño: {{proceso.tamano}} kB</p>
+            <p>Ciclos restantes: {{proceso.ciclosRestantes}}</p>
+        </div>
+    </ng-container>
+    <ng-container *ngFor="let proceso of procesosPrioridad2; let i = index">
+        <div class="card" style="background-color: rgb({{proceso.color.r}},{{proceso.color.g}},{{proceso.color.b}}); color: {{getFontColor(proceso.color)}};">
+            <p>PID: {{proceso.PID}}</p>
+            <p>Prioridad: 2</p>
+            <p>Tamaño: {{proceso.tamano}} kB</p>
+            <p>Ciclos restantes: {{proceso.ciclosRestantes}}</p>
+        </div>
+    </ng-container>
+    <ng-container *ngFor="let proceso of procesosPrioridad1; let i = index">
+        <div class="card" style="background-color: rgb({{proceso.color.r}},{{proceso.color.g}},{{proceso.color.b}}); color: {{getFontColor(proceso.color)}};">
+            <p>PID: {{proceso.PID}}</p>
+            <p>Prioridad: 1</p>
+            <p>Tamaño: {{proceso.tamano}} kB</p>
+            <p>Ciclos restantes: {{proceso.ciclosRestantes}}</p>
+        </div>
+    </ng-container>
+    <ng-container *ngFor="let proceso of procesosPrioridad0; let i = index">
+        <div class="card" style="background-color: rgb({{proceso.color.r}},{{proceso.color.g}},{{proceso.color.b}}); color: {{getFontColor(proceso.color)}};">
+            <p>PID: {{proceso.PID}}</p>
+            <p>Prioridad: Sin prioridad</p>
+            <p>Tamaño: {{proceso.tamano}} kB</p>
+            <p>Ciclos restantes: {{proceso.ciclosRestantes}}</p>
+        </div>
+    </ng-container>
+</div>
+

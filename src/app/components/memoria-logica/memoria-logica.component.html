@@ -3,7 +3,8 @@
     <div class="container">
         <ng-container *ngFor="let pagina of procesoActual.paginas; let i = index">
             <div class="card" style="background-color: rgb({{procesoActual.color.r}},{{procesoActual.color.g}},{{procesoActual.color.b}}); color: {{getFontColor(procesoActual.color)}};">
-                <p>{{i}}: {{pagina.direccionFisica}}</p>
+                <p>Página: {{i}}</p>
+                <p>Frame: {{pagina.direccionFisica}}</p>
             </div>
         </ng-container>
     </div>

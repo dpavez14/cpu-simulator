@@ -1,11 +1,15 @@
 import {Frame} from "./frame";
 import {Color} from "./color";
+import {Proceso} from "./proceso";
 
 export class Memoria {
+    cantidadFrames: number;
     private indicesFramesLibres: number[];
     framesUsados: Frame[];
+    fifo: Proceso[] = [];
 
     constructor(nFrames: number) {
+        this.cantidadFrames = nFrames;
         this.indicesFramesLibres = [];
         this.framesUsados = [];
         for (let i = 0; i < nFrames; i++) {
@@ -16,17 +20,34 @@ export class Memoria {
     }
 
     //Retorna la direccion fisica en que se asigno
-    asignarFrame(PID: number, nPagina: number, memoriaUtilizada:number, color: Color): number | undefined {
+    asignarFrame(proceso: Proceso, indicePagina: number): number | undefined {
         const frame = this.indicesFramesLibres.shift();
         if(frame != null) {
-            this.framesUsados[frame] = (new Frame(PID, nPagina, memoriaUtilizada, color));
+            this.framesUsados[frame] = (new Frame(proceso.PID, indicePagina, proceso.paginas[indicePagina].espacioUtilizado, proceso.color));
         }
         return frame;
     }
 
+    liberarFramesProceso(proceso: Proceso) {
+        for (let i = 0; i < this.fifo.length; i++) {
+            if (this.fifo[i].PID == proceso.PID) {
+                this.fifo.splice(i, 1);
+                for (let j = 0; j < proceso.paginas.length; j++) {
+                    const frame = proceso.paginas[j].direccionFisica;
+                    this.liberarFrameUsado(frame);
+                }
+                return;
+            }
+        }
+    }
+
     liberarFrameUsado(frame: number) {
-        delete this.framesUsados[frame];
-        this.indicesFramesLibres.push(frame);
+        if (frame < this.cantidadFrames) {
+            delete this.framesUsados[frame];
+        }
+        if (this.framesUsados[frame] == null) {
+            this.indicesFramesLibres.push(frame);
+        }
     }
 
     cantidadFramesLibres(): number {

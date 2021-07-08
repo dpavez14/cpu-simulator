@@ -88,7 +88,7 @@ export class DataService {
 
     this.iniciadoSubject$.next(true);
     this.memoriaPrincipalSubject$.next(new Memoria(this.tamanoMemoria/this.tamanoPaginas));
-    this.memoriaVirtualSubject$.next(new Memoria( 4096/this.tamanoPaginas)); //4 GB aprox
+    this.memoriaVirtualSubject$.next(new Memoria( 4096/this.tamanoPaginas)); //4 MB aprox
     this.cuantoCPUSubject$.next(this.cuantoCPU);
     this.relojCPU = timer(1000, 1000);
   }
@@ -102,7 +102,7 @@ export class DataService {
   }
 
   agregarProceso(prioridad: number) {
-    const p = new Proceso(this.PIDActual, prioridad, this.getRandomInt(1,this.tamanoMemoria), this.getRandomInt(2,10), this.getRandomColor());
+    const p = new Proceso(this.PIDActual, prioridad, this.getRandomInt(1,this.tamanoMemoria), this.getRandomInt(2,this.cuantoCPU * 3), this.getRandomColor());
     let nPag = Math.floor(p.tamano/this.tamanoPaginas);
 
     //Asignar espacio utilizado de páginas

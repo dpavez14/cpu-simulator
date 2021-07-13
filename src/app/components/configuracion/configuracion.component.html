@@ -23,6 +23,28 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
+        <mat-label>Reemplazo de páginas</mat-label>
+        <mat-select [(value)]="algoritmo" [disabled]="iniciado">
+            <mat-option value="fifo">FIFO</mat-option>
+            <mat-option value="lru">LRU</mat-option>
+            <mat-option value="mru">MRU</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-divider [vertical]="true" style="height: 40px; align-self: center"></mat-divider>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Tamaño proceso</mat-label>
+        <input matInput type="number" min="0" class="right-align" placeholder="0" [(ngModel)]="tamanoProceso">
+        <span matSuffix>kB</span>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Ciclos proceso</mat-label>
+        <input matInput type="number" min="0" class="right-align" placeholder="0" [(ngModel)]="ciclosProceso">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
         <mat-label>Prioridad</mat-label>
         <mat-select [(value)]="prioridad">
             <mat-option value="0">Sin prioridad</mat-option>

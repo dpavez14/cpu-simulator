@@ -6,7 +6,7 @@ export class Memoria {
     cantidadFrames: number;
     private indicesFramesLibres: number[];
     framesUsados: Frame[];
-    fifo: Proceso[] = [];
+    ordenReemplazo: Proceso[] = [];
 
     constructor(nFrames: number) {
         this.cantidadFrames = nFrames;
@@ -29,9 +29,9 @@ export class Memoria {
     }
 
     liberarFramesProceso(proceso: Proceso) {
-        for (let i = 0; i < this.fifo.length; i++) {
-            if (this.fifo[i].PID == proceso.PID) {
-                this.fifo.splice(i, 1);
+        for (let i = 0; i < this.ordenReemplazo.length; i++) {
+            if (this.ordenReemplazo[i].PID == proceso.PID) {
+                this.ordenReemplazo.splice(i, 1);
                 for (let j = 0; j < proceso.paginas.length; j++) {
                     const frame = proceso.paginas[j].direccionFisica;
                     this.liberarFrameUsado(frame);

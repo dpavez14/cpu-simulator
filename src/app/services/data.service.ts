@@ -3,7 +3,6 @@ import {BehaviorSubject, Observable, timer} from "rxjs";
 import {Proceso} from "../models/proceso";
 import {Pagina} from "../models/pagina";
 import {Color} from "../models/color";
-import {Frame} from "../models/frame";
 import {Memoria} from "../models/memoria";
 
 @Injectable({
@@ -72,19 +71,21 @@ export class DataService {
   cuantoCPU = 0;
   tiempoCiclo = 0;
   tiempoPausa = 0;
+  algoritmo = "";
 
   constructor() { }
 
-  iniciar(cuanto: number, tamanoMemoria: number, tamanoPaginas: number, tiempoCiclo: number) {
-    this.iniciarDatos(cuanto, tamanoMemoria, tamanoPaginas, tiempoCiclo);
+  iniciar(cuanto: number, tamanoMemoria: number, tamanoPaginas: number, tiempoCiclo: number, algoritmo: string) {
+    this.iniciarDatos(cuanto, tamanoMemoria, tamanoPaginas, tiempoCiclo, algoritmo);
     this.procesar();
   }
 
-  iniciarDatos(cuanto: number, tamanoMemoria: number, tamanoPaginas: number, tiempoCiclo: number) {
+  iniciarDatos(cuanto: number, tamanoMemoria: number, tamanoPaginas: number, tiempoCiclo: number, algoritmo: string) {
     this.cuantoCPU = cuanto;
     this.tamanoMemoria = tamanoMemoria;
     this.tamanoPaginas = tamanoPaginas;
     this.tiempoCiclo  = tiempoCiclo;
+    this.algoritmo = algoritmo;
 
     this.iniciadoSubject$.next(true);
     this.memoriaPrincipalSubject$.next(new Memoria(this.tamanoMemoria/this.tamanoPaginas));
@@ -101,8 +102,15 @@ export class DataService {
     this.pausadoSubject$.next(false);
   }
 
-  agregarProceso(prioridad: number) {
-    const p = new Proceso(this.PIDActual, prioridad, this.getRandomInt(1,this.tamanoMemoria), this.getRandomInt(2,this.cuantoCPU * 3), this.getRandomColor());
+  agregarProceso(prioridad: number, tamano: number, ciclos: number) {
+    const p = new Proceso(
+        this.PIDActual,
+        prioridad,
+        tamano <= 0 ? this.getRandomInt(1,this.tamanoMemoria/2) : tamano,
+        ciclos <= 0 ? this.getRandomInt(this.cuantoCPU + 1,this.cuantoCPU * 3) : ciclos,
+        this.getRandomColor()
+    );
+
     let nPag = Math.floor(p.tamano/this.tamanoPaginas);
 
     //Asignar espacio utilizado de páginas
@@ -130,7 +138,9 @@ export class DataService {
           p.paginas[i].direccionFisica = direccion;
         }
       }
-      memoriaP.fifo.push(p);
+      if (this.algoritmo == "fifo") {
+        memoriaP.ordenReemplazo.push(p);
+      }
       this.memoriaPrincipalSubject$.next(memoriaP);
     }
     else if (memoriaV != null && memoriaV.cantidadFramesLibres() >= nPag) {
@@ -212,10 +222,25 @@ export class DataService {
 
   asignarSiguienteProceso() {
     const proceso = this.obtenerProcesoCola();
+
     if (proceso != null) {
       this.moverProcesoMemoriaPrincipal(proceso);
     }
     this.cuantoCPUSubject$.next(this.cuantoCPU);
+    if ((this.algoritmo == "lru" || this.algoritmo == "mru")  && proceso != null) {
+      const memoriaPrincipal = this.memoriaPrincipalSubject$.getValue();
+      if(memoriaPrincipal != null) {
+        //Si el proceso MÁS reciente se encuenta en la lista de orden reemplazo, eliminarlo
+        //Agregar otra vez ese proceso al FINAL
+        for (let i = 0; i < memoriaPrincipal.ordenReemplazo.length; i++) {
+          if(memoriaPrincipal.ordenReemplazo[i].PID == proceso.PID) {
+            memoriaPrincipal.ordenReemplazo.splice(i, 1);
+          }
+        }
+        memoriaPrincipal?.ordenReemplazo.push(proceso); //El proceso más reciente queda al final
+        this.memoriaPrincipalSubject$.next(memoriaPrincipal);
+      }
+    }
     this.procesoActualSubject$.next(proceso);
   }
 
@@ -226,9 +251,16 @@ export class DataService {
       if (memoriaPrincipal != null && memoriaVirtual != null) {
         //Mover paginas de memoria principal a la virtual hasta que haya espacio para el proceso que se quiere mover
         while (memoriaPrincipal.cantidadFramesLibres() < proceso.paginas.length) {
-          const procesoRemover = memoriaPrincipal.fifo.shift();
-          console.dir(procesoRemover);
-          console.dir(memoriaPrincipal);
+          let procesoRemover;
+          if (this.algoritmo == "mru") {
+            //MRU: El proceso más reciente está en el final
+            procesoRemover = memoriaPrincipal.ordenReemplazo.pop();
+          }
+          else {
+            //FIFO: El primer proceso agregado a la memoria está al inicio
+            //LRU: El proceso menos reciente está al inicio
+            procesoRemover = memoriaPrincipal.ordenReemplazo.shift();
+          }
           if (procesoRemover != null) {
             for (let i = 0; i < procesoRemover.paginas.length; i++) {
               const pagina = procesoRemover.paginas[i];
@@ -249,7 +281,9 @@ export class DataService {
             proceso.paginas[i].direccionFisica = direccion;
           }
         }
-        memoriaPrincipal.fifo.push(proceso);
+        if (this.algoritmo == "fifo") {
+          memoriaPrincipal.ordenReemplazo.push(proceso);
+        }
         proceso.isVirtual = false;
       }
       this.memoriaPrincipalSubject$.next(memoriaPrincipal);
@@ -290,10 +324,8 @@ export class DataService {
 
   eliminarProcesoMemoria(proceso: Proceso) {
     const memoriaPrincipal = this.memoriaPrincipalSubject$.getValue();
-    console.log(this.memoriaPrincipalSubject$.getValue());
     memoriaPrincipal?.liberarFramesProceso(proceso);
     this.memoriaPrincipalSubject$.next(memoriaPrincipal);
-    console.log(this.memoriaPrincipalSubject$.getValue());
   }
 
   obtenerProcesoCola(): Proceso | undefined {

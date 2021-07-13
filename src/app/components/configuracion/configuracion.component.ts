@@ -16,6 +16,9 @@ export class ConfiguracionComponent implements OnInit {
   iniciado = false;
   pausado = false;
   nProcesos = 1;
+  algoritmo = "fifo";
+  tamanoProceso = "0";
+  ciclosProceso = "0";
 
   constructor(private dataService: DataService) { }
 
@@ -26,10 +29,10 @@ export class ConfiguracionComponent implements OnInit {
 
   agregarProceso() {
     if (!this.iniciado) {
-      this.dataService.iniciar(this.cuanto, this.tamanoMemoria,+this.tamanoPaginas, this.tiempoCiclo);
+      this.dataService.iniciar(this.cuanto, this.tamanoMemoria,+this.tamanoPaginas, this.tiempoCiclo, this.algoritmo);
     }
     for (let i = 0; i < this.nProcesos; i++) {
-      this.dataService.agregarProceso(+this.prioridad);
+      this.dataService.agregarProceso(+this.prioridad, +this.tamanoProceso, +this.ciclosProceso);
     }
   }
 

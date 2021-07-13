@@ -21,8 +21,9 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatIconModule } from "@angular/material/icon";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatRadioModule } from "@angular/material/radio";
-import {FlexLayoutModule} from "@angular/flex-layout";
-import {FormsModule} from "@angular/forms";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { FormsModule } from "@angular/forms";
+import { MatDividerModule } from "@angular/material/divider";
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import {FormsModule} from "@angular/forms";
     MatIconModule,
     MatExpansionModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

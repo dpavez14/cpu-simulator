@@ -194,9 +194,6 @@ export class DataService {
         this.ciclosSubject$.next(this.ciclosSubject$.getValue() + 1);
         let proceso: Proceso | undefined = this.procesoActualSubject$.getValue();
         if (proceso != null) {
-          if (proceso.isVirtual) {
-            this.moverProcesoMemoriaPrincipal(proceso);
-          }
           proceso.ciclosRestantes--;
           this.cuantoCPUSubject$.next(this.cuantoCPUSubject$.getValue() - 1);
           if (proceso.ciclosRestantes <= 0)  {
@@ -206,7 +203,6 @@ export class DataService {
           else if (this.cuantoCPUSubject$.getValue() <= 0) {
             this.moverProcesoFinCola(proceso);
             this.asignarSiguienteProceso();
-            this.cuantoCPUSubject$.next(this.cuantoCPU); //Reiniciar cuanto de CPU
           }
           else {
             //Actualizar tiempo restante de proceso actual
@@ -246,6 +242,7 @@ export class DataService {
 
   moverProcesoMemoriaPrincipal(proceso: Proceso) {
     if (proceso.isVirtual) {
+      console.log("Fallo de página proceso " + proceso.PID);
       const memoriaPrincipal = this.memoriaPrincipalSubject$.getValue();
       const memoriaVirtual = this.memoriaVirtualSubject$.getValue();
       if (memoriaPrincipal != null && memoriaVirtual != null) {

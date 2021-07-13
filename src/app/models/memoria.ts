@@ -15,6 +15,7 @@ export class Memoria {
         for (let i = 0; i < nFrames; i++) {
             this.indicesFramesLibres.push(i);
         }
+        //Dejar arreglo framesUsados con valores vacíos hasta nFrames-1
         this.framesUsados[nFrames - 1] = new Frame(0,0, 0,new Color(0,0,0));
         delete this.framesUsados[nFrames - 1];
     }
